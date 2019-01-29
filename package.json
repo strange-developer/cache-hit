@@ -12,12 +12,7 @@
   },
   "scripts": {
     "build": "babel src --out-dir lib",
-    "lint": "./node_modules/.bin/eslint --ext .js .",
-    "semantic-release": "semantic-release",
-    "test": "npm run lint && npm run test:vulnerabilities && npm run test:scripts",
-    "test:scripts": "jest --coverage",
-    "test:scripts:watch": "npm run test:scripts -- --watchAll",
-    "test:vulnerabilities": "npm audit"
+    "lint": "./node_modules/.bin/eslint --ext .js ."
   },
   "author": "strange-developer",
   "license": "MIT",
