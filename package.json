@@ -12,6 +12,8 @@
   },
   "scripts": {
     "build": "babel src --out-dir lib",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "lint": "./node_modules/.bin/eslint --ext .js ."
   },
   "author": "strange-developer",

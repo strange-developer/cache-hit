@@ -1,4 +1,4 @@
-function calculateExpiry(timeToLive) {
+export function calculateExpiry(timeToLive) {
   if (timeToLive === Number.POSITIVE_INFINITY) {
     return Number.POSITIVE_INFINITY;
   }
@@ -23,8 +23,16 @@ function isTimeToLiveExpired(timeToLive) {
   return false;
 }
 
-function shouldMakeApiCall(cache, key, timeToLive) {
-  if (timeToLive === Number.POSITIVE_INFINITY && didResponsePreviouslyFail(cache, key)) {
+function isInfiniteCache(timeToLive) {
+  return timeToLive === Number.POSITIVE_INFINITY;
+}
+
+export function shouldMakeApiCall(cache, key, timeToLive) {
+  if (isInfiniteCache(timeToLive) && didResponsePreviouslyFail(cache, key)) {
+    return true;
+  }
+
+  if (!isInfiniteCache(timeToLive) && !hasCacheValue(cache, key)) {
     return true;
   }
 
@@ -32,14 +40,5 @@ function shouldMakeApiCall(cache, key, timeToLive) {
     return true;
   }
 
-  if (timeToLive !== Number.POSITIVE_INFINITY && !hasCacheValue(cache, key)) {
-    return true;
-  }
-
   return false;
 }
-
-export default {
-  shouldMakeApiCall,
-  calculateExpiry,
-};
