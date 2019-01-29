@@ -1,12 +1,7 @@
-function createCache(apiCall, options) {
-  let cache = {};
+import { shouldMakeApiCall, calculateExpiry } from './utils';
 
-  function calculateExpiry(timeToLive) {
-    if (timeToLive === Number.POSITIVE_INFINITY) {
-      return Number.POSITIVE_INFINITY;
-    }
-    return new Date().getTime() + timeToLive;
-  }
+function createCache(apiCall, options) {
+  const cache = {};
 
   const internalOptions = { timeToLive: calculateExpiry(options.timeToLive) };
 
@@ -22,21 +17,11 @@ function createCache(apiCall, options) {
     return result;
   }
 
-  function shouldMakeApiCall() {
-    if (
-      internalOptions.timeToLive !== Number.POSITIVE_INFINITY
-      && (Object.keys(cache).length === 0 || new Date().getTime() > internalOptions.timeToLive)
-    ) {
-      return true;
-    }
-    return false;
-  }
-
-  async function read(...parameters) {
+  async function read(key, ...parameters) {
     let response = cache;
-    if (shouldMakeApiCall(cache)) {
+    if (shouldMakeApiCall(cache, key, internalOptions.timeToLive)) {
       response = await makeCall(parameters);
-      cache = response;
+      cache[key] = response;
       internalOptions.timeToLive = calculateExpiry(options.timeToLive);
     }
     return response;
