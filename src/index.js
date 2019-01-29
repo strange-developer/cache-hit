@@ -2,8 +2,8 @@ function createCache(apiCall, options) {
   let cache = {};
 
   function calculateExpiry(timeToLive) {
-    if (timeToLive === 'infinity') {
-      return 'infinity';
+    if (timeToLive === Number.POSITIVE_INFINITY) {
+      return Number.POSITIVE_INFINITY;
     }
     return new Date().getTime() + timeToLive;
   }
@@ -24,8 +24,8 @@ function createCache(apiCall, options) {
 
   function shouldMakeApiCall() {
     if (
-      internalOptions.timeToLive !== 'inifinity' &&
-      (Object.keys(cache).length === 0 || new Date().getTime() > internalOptions.timeToLive)
+      internalOptions.timeToLive !== Number.POSITIVE_INFINITY
+      && (Object.keys(cache).length === 0 || new Date().getTime() > internalOptions.timeToLive)
     ) {
       return true;
     }
