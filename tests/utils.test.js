@@ -89,8 +89,6 @@ describe('hasCacheValue', () => {
 });
 
 describe('isTimeToLiveExpired', () => {
-  let expiryTime;
-
   test('returns true when expiryTime is lower than current time', () => {
     expect(isTimeToLiveExpired(1)).toBe(true);
   });
