@@ -6,7 +6,7 @@ export function calculateExpiry(timeToLive) {
 }
 
 export function hasCacheValue(cache, key) {
-  return cache[key] !== undefined && cache[key].isSuccessful !== true;
+  return cache[key] !== undefined;
 }
 
 export function isTimeToLiveExpired(expiryTime) {
@@ -20,7 +20,7 @@ export function shouldMakeApiCall(cache, key, expiryTime) {
   const containsCacheValue = hasCacheValue(cache, key);
   const isExpiryReached = isTimeToLiveExpired(expiryTime);
 
-  if (containsCacheValue && isExpiryReached) {
+  if ((containsCacheValue && isExpiryReached) || !containsCacheValue) {
     return true;
   }
 
