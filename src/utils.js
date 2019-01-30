@@ -1,4 +1,4 @@
-export function calculateExpiry(timeToLive) {
+export function calculateExpiry(timeToLive = 30000) {
   if (timeToLive === Number.POSITIVE_INFINITY) {
     return Number.POSITIVE_INFINITY;
   }
