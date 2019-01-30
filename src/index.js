@@ -5,22 +5,10 @@ function createCache(apiCall, options) {
 
   const internalOptions = { timeToLive: calculateExpiry(options.timeToLive) };
 
-  async function makeCall(parameters) {
-    const result = { isSuccessful: undefined, result: undefined };
-    try {
-      result.result = await apiCall(...parameters);
-      result.isSuccessful = true;
-    } catch (error) {
-      result.result = error;
-      result.isSuccessful = false;
-    }
-    return result;
-  }
-
   async function read(key, ...parameters) {
     let response = cache;
     if (shouldMakeApiCall(cache, key, internalOptions.timeToLive)) {
-      response = await makeCall(parameters);
+      response = await apiCall(parameters);
       cache[key] = response;
       internalOptions.timeToLive = calculateExpiry(options.timeToLive);
     }
