@@ -3,11 +3,11 @@ import timekeeper from 'timekeeper';
 import {
   calculateExpiry,
   hasCacheValue,
-  shouldMakeApiCall,
+  shouldInvokePromise,
   isTimeToLiveExpired,
 } from '../src/utils';
 
-describe('shouldMakeApiCall', () => {
+describe('shouldInvokePromise', () => {
   let cache;
   let key;
   let expiryTime;
@@ -20,7 +20,7 @@ describe('shouldMakeApiCall', () => {
     });
 
     test('returns true', async () => {
-      expect(shouldMakeApiCall(cache, key, expiryTime)).toBe(true);
+      expect(shouldInvokePromise(cache, key, expiryTime)).toBe(true);
     });
   });
 
@@ -32,7 +32,7 @@ describe('shouldMakeApiCall', () => {
     });
 
     test('returns true', () => {
-      expect(shouldMakeApiCall(cache, key, expiryTime)).toBe(true);
+      expect(shouldInvokePromise(cache, key, expiryTime)).toBe(true);
     });
   });
 
@@ -44,7 +44,7 @@ describe('shouldMakeApiCall', () => {
     });
 
     test('returns true', () => {
-      expect(shouldMakeApiCall(cache, key, expiryTime)).toBe(true);
+      expect(shouldInvokePromise(cache, key, expiryTime)).toBe(true);
     });
   });
 
@@ -56,7 +56,7 @@ describe('shouldMakeApiCall', () => {
     });
 
     test('returns true', () => {
-      expect(shouldMakeApiCall(cache, key, expiryTime)).toBe(false);
+      expect(shouldInvokePromise(cache, key, expiryTime)).toBe(false);
     });
   });
 });

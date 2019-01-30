@@ -16,7 +16,7 @@ export function isTimeToLiveExpired(expiryTime) {
   return false;
 }
 
-export function shouldMakeApiCall(cache, key, expiryTime) {
+export function shouldInvokePromise(cache, key, expiryTime) {
   const containsCacheValue = hasCacheValue(cache, key);
   const isExpiryReached = isTimeToLiveExpired(expiryTime);
 
