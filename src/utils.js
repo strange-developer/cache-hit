@@ -1,5 +1,5 @@
-export function calculateExpiry(timeToLive = 30000) {
-  if (timeToLive === Number.POSITIVE_INFINITY) {
+export function calculateExpiry(timeToLive) {
+  if (timeToLive === Number.POSITIVE_INFINITY || timeToLive === undefined) {
     return Number.POSITIVE_INFINITY;
   }
   return new Date().getTime() + timeToLive;
