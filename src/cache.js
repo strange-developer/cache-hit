@@ -1,6 +1,6 @@
 import { shouldMakeApiCall, calculateExpiry } from './utils';
 
-function createCache(apiCall, options) {
+function createCache(apiCall, options = {}) {
   const cache = {};
 
   const internalOptions = { timeToLive: calculateExpiry(options.timeToLive) };
