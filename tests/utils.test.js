@@ -1,7 +1,9 @@
+import timekeeper from 'timekeeper';
+
 import {
-  shouldMakeApiCall,
+  calculateExpiry,
   hasCacheValue,
-  didResponsePreviouslyFail,
+  shouldMakeApiCall,
   isTimeToLiveExpired,
 } from '../src/utils';
 
@@ -10,7 +12,7 @@ describe('shouldMakeApiCall', () => {
   let key;
   let expiryTime;
 
-  describe('infinite time to live with empty cache', () => {
+  describe('empty cache with infinite expiration', () => {
     beforeAll(() => {
       cache = {};
       key = 'test';
@@ -22,19 +24,7 @@ describe('shouldMakeApiCall', () => {
     });
   });
 
-  describe('infinite time to live with cache of failed response', () => {
-    beforeAll(() => {
-      key = 'test';
-      cache = { [key]: { response: 'Error', isSuccessful: false } };
-      expiryTime = Number.POSITIVE_INFINITY;
-    });
-
-    test('returns true with empty cache', async () => {
-      expect(shouldMakeApiCall(cache, key, expiryTime)).toBe(true);
-    });
-  });
-
-  describe('finite cache without cache value', () => {
+  describe('empty cache with available expiry', () => {
     beforeAll(() => {
       cache = {};
       key = 'test';
@@ -46,10 +36,10 @@ describe('shouldMakeApiCall', () => {
     });
   });
 
-  describe('finite cache with cache value and expired time to live', () => {
+  describe('with cache value and expired cache', () => {
     beforeAll(() => {
       key = 'test';
-      cache = { [key]: { response: 'success', isSuccessful: true } };
+      cache = { [key]: { response: 'success' } };
       expiryTime = 1;
     });
 
@@ -58,10 +48,10 @@ describe('shouldMakeApiCall', () => {
     });
   });
 
-  describe('returns false | finite cache with cache value and valid time to live', () => {
+  describe('with cache and available expiry', () => {
     beforeAll(() => {
       key = 'test';
-      cache = { [key]: { response: 'success', isSuccessful: true } };
+      cache = { [key]: { response: 'success' } };
       expiryTime = Number.MAX_SAFE_INTEGER;
     });
 
@@ -75,25 +65,26 @@ describe('hasCacheValue', () => {
   let key;
   let cache;
 
-  test('returns true when cache value is present', () => {
-    key = 'test-key';
-    cache = { [key]: { response: 'success', isSuccessful: true } };
+  describe('when cache value is present', () => {
+    beforeAll(() => {
+      key = 'test-key';
+      cache = { [key]: { response: 'success' } };
+    });
 
-    expect(hasCacheValue(cache, key)).toBe(true);
+    test('returns true when cache value is present', () => {
+      expect(hasCacheValue(cache, key)).toBe(true);
+    });
   });
 
-  test('returns false when no cache key has no object properties', () => {
-    key = 'test-key';
-    cache = { [key]: {} };
+  describe('when cache value is not present', () => {
+    beforeAll(() => {
+      key = 'test-key';
+      cache = {};
+    });
 
-    expect(hasCacheValue(cache, key)).toBe(false);
-  });
-
-  test('returns false when no cache key is present', () => {
-    key = 'test-key';
-    cache = {};
-
-    expect(hasCacheValue(cache, key)).toBe(false);
+    test('returns true when cache value is present', () => {
+      expect(hasCacheValue(cache, key)).toBe(false);
+    });
   });
 });
 
@@ -106,5 +97,34 @@ describe('isTimeToLiveExpired', () => {
 
   test('returns false when expiryTime is greater than current time', () => {
     expect(isTimeToLiveExpired(Number.MAX_SAFE_INTEGER)).toBe(false);
+  });
+});
+
+describe('calculateExpiry', () => {
+  let timeToLive;
+
+  describe('never expires', () => {
+    beforeAll(() => {
+      timeToLive = Number.POSITIVE_INFINITY;
+    });
+
+    test('returns Number.POSITIVE_INFINITY', () => {
+      expect(calculateExpiry(timeToLive)).toBe(Number.POSITIVE_INFINITY);
+    });
+  });
+
+  describe('sets correct expiry', () => {
+    beforeAll(() => {
+      timekeeper.freeze(new Date(150000000000));
+      timeToLive = 15000;
+    });
+
+    afterAll(() => {
+      timekeeper.reset();
+    });
+
+    test('returns correct expiry', () => {
+      expect(calculateExpiry(timeToLive)).toBe(150000015000);
+    });
   });
 });
