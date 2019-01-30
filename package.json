@@ -13,7 +13,7 @@
   "scripts": {
     "build": "babel src --out-dir lib",
     "test": "jest",
-    "test:watch": "jest --watch",
+    "test:watch": "jest --watchAll --coverage",
     "lint": "./node_modules/.bin/eslint --ext .js ."
   },
   "author": "strange-developer",
@@ -28,9 +28,7 @@
     "eslint": "^5.10.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "jest": "^23.6.0",
-    "semantic-release": "^15.12.5",
-    "travis-deploy-once": "^5.0.9"
+    "jest": "^23.6.0"
   },
   "publishConfig": {
     "access": "public"

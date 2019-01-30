@@ -5,38 +5,22 @@ export function calculateExpiry(timeToLive) {
   return new Date().getTime() + timeToLive;
 }
 
-function hasCacheValue(cache, key) {
-  return Object.keys(cache).length === 0 && Object.keys(cache[key]).length === 0;
+export function hasCacheValue(cache, key) {
+  return cache[key] !== undefined && cache[key].isSuccessful !== true;
 }
 
-function didResponsePreviouslyFail(cache, key) {
-  if (cache[key] && !cache[key].isSuccessful) {
+export function isTimeToLiveExpired(expiryTime) {
+  if (new Date().getTime() > expiryTime) {
     return true;
   }
   return false;
 }
 
-function isTimeToLiveExpired(timeToLive) {
-  if (new Date().getTime() > timeToLive) {
-    return true;
-  }
-  return false;
-}
+export function shouldMakeApiCall(cache, key, expiryTime) {
+  const containsCacheValue = hasCacheValue(cache, key);
+  const isExpiryReached = isTimeToLiveExpired(expiryTime);
 
-function isInfiniteCache(timeToLive) {
-  return timeToLive === Number.POSITIVE_INFINITY;
-}
-
-export function shouldMakeApiCall(cache, key, timeToLive) {
-  if (isInfiniteCache(timeToLive) && didResponsePreviouslyFail(cache, key)) {
-    return true;
-  }
-
-  if (!isInfiniteCache(timeToLive) && !hasCacheValue(cache, key)) {
-    return true;
-  }
-
-  if (isTimeToLiveExpired()) {
+  if (containsCacheValue && isExpiryReached) {
     return true;
   }
 
