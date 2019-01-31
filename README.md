@@ -6,19 +6,24 @@ JavaScript promise caching library
 
 ### options
 
-|Option          |Description                                                    |Default value                |
-|----------------|-------------------------------                                |-----------------------------|
-|timeToLive      |An integer value that the cache is valid for in milliseconds   |`Number.POSITIVE_INFINITY`   |
+|Option          |Required|Description                                                     |Default value                |
+|----------------|--------|----------------------------------------------------------------|-----------------------------|
+|timeToLive      |  No    | An integer value that the cache is valid for in milliseconds   |`Number.POSITIVE_INFINITY`   |
+
+#### Omitting `timeToLive` Option
+This will result in an infinite cache. Once a successful response is received, the promise will never be invoked a second time.
 
 ### Cache
 
+```ts
 interface Cache {
   read: () => Promise
 }
+```
 
 ## API
 
-### createCache(promiseReturningFunction: () => Promise, options): {}
+### createCache(promiseReturningFunction: () => Promise, options): Cache
 
 **PARAMETERS**
 
@@ -46,7 +51,7 @@ Data returned will be stored in the cache based on a key. Whenever reads occur, 
 
 Parameters that can be spread into the read function which will then be passed into the promise returning function.
 
-Example
+### Example
 ```js
 // get-accounts.js
 import createCache from 'cache-hit';
@@ -73,8 +78,3 @@ const getAccounts = (username, sessionId) => {
 
 ## Errors
 All errors will need to be handled after calling the `read` method. The cache will not be updated on any rejected promises.
-
-## Omitting `timeToLive` Option
-This will result in an infinite cache. Once a successful response is received, the promise will never be invoked a second time.
-
-
