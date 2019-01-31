@@ -32,6 +32,12 @@ Data returned will be stored in the cache based on a key. Whenever reads occur, 
 
 Parameters that can be passed into the read function which will then be passed into the promise returning function.
 
+### options
+
+|Option          |Description                                                    |Default value                |
+|----------------|-------------------------------                                |-----------------------------|
+|timeToLive      |An integer value that the cache is valid for in milliseconds   |`Number.POSITIVE_INFINITY`   |
+
 Example
 ```
 // get-accounts.js
