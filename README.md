@@ -1,6 +1,6 @@
 # cache-hit
 
-Promise caching library for any type of data that can fit into a JavaScript object.
+Promise caching library
 
 ## Types
 
@@ -24,17 +24,17 @@ interface Cache {
 
 **promiseReturningFunction**
 
-A function that when called, will start a promise. The promise is invoked from within the library.
+A function that when called, will return a promise. The `promiseReturningFunction` is invoked from within the library.
 
 **options**
 
-Options specified by the library. Currently, only `timeToLive` is supported.
+Object of options specified.
 
 **Return Value**
 
 Returns an object containing a `read` function.
 
-### read(key: string, ...promiseParameters: []): Promise
+### read(key: string, promiseParameters: any[]): Promise
 
 **PARAMETERS**
 
@@ -44,7 +44,7 @@ Data returned will be stored in the cache based on a key. Whenever reads occur, 
 
 **promiseParameters**
 
-Parameters that can be passed into the read function which will then be passed into the promise returning function.
+Parameters that can be spread into the read function which will then be passed into the promise returning function.
 
 Example
 ```
