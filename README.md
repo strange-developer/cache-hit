@@ -1,6 +1,6 @@
 # cache-hit
 
-Promise caching library
+JavaScript promise caching library
 
 ## Types
 
@@ -28,7 +28,7 @@ A function that when called, will return a promise. The `promiseReturningFunctio
 
 **options**
 
-Object of options specified.
+Object of options. Supported options are listed in the Types section.
 
 **Return Value**
 
