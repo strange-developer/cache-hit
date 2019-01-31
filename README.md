@@ -47,7 +47,7 @@ Data returned will be stored in the cache based on a key. Whenever reads occur, 
 Parameters that can be spread into the read function which will then be passed into the promise returning function.
 
 Example
-```
+```js
 // get-accounts.js
 import createCache from 'cache-hit';
 
@@ -58,7 +58,7 @@ const getAccountsApiCached = createCache(getAccountsApi, { timeToLive: 15000 });
 export default getAccountsApiCached;
 ```
 
-```
+```js
 // accounts.js
 import getAccountsApiCached from './get-accounts';
 
