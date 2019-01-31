@@ -2,9 +2,23 @@
 
 Promise caching library for any type of data that can fit into a JavaScript object.
 
+## Types
+
+### options
+
+|Option          |Description                                                    |Default value                |
+|----------------|-------------------------------                                |-----------------------------|
+|timeToLive      |An integer value that the cache is valid for in milliseconds   |`Number.POSITIVE_INFINITY`   |
+
+### Cache
+
+interface Cache {
+  read: () => Promise
+}
+
 ## API
 
-### createCache(promiseReturningFunction: () => {}, options): {}
+### createCache(promiseReturningFunction: () => Promise, options): {}
 
 **PARAMETERS**
 
@@ -20,7 +34,7 @@ Options specified by the library. Currently, only `timeToLive` is supported.
 
 Returns an object containing a `read` function.
 
-### read(key: string, ...promiseParameters: [])
+### read(key: string, ...promiseParameters: []): Promise
 
 **PARAMETERS**
 
@@ -31,12 +45,6 @@ Data returned will be stored in the cache based on a key. Whenever reads occur, 
 **promiseParameters**
 
 Parameters that can be passed into the read function which will then be passed into the promise returning function.
-
-### options
-
-|Option          |Description                                                    |Default value                |
-|----------------|-------------------------------                                |-----------------------------|
-|timeToLive      |An integer value that the cache is valid for in milliseconds   |`Number.POSITIVE_INFINITY`   |
 
 Example
 ```
