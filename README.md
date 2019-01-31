@@ -4,25 +4,32 @@ Promise caching library for any type of data that can fit into a JavaScript obje
 
 ## API
 
-#### createCache(promiseReturningFunction: () => {}, options): () => {}
+#### createCache(promiseReturningFunction: () => {}, options): {}
 
 **PARAMETERS**
+
 **promiseReturningFunction**
+
 A function that when called, will start a promise. The promise is invoked from within the library.
 
 **options**
+
 Options specified by the library. Currently, only `timeToLive` is supported.
 
 **Return Value**
+
 Returns an object containing a `read` function.
 
 read(key: string, ...promiseParameters: [])
 
 **PARAMETERS**
+
 **key**
+
 Data returned will be stored in the cache based on a key. Whenever reads occur, the cache will first be checked for a _valid_ cache value and return the cached value or in the case of an _invalid_ cache, the promise will be invoked and data will be stored in the cache depending on your `timeToLive` option.
 
 **promiseParameters**
+
 Parameters that can be passed into the read function which will then be passed into the promise returning function.
 
 Example
