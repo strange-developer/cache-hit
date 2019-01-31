@@ -20,7 +20,7 @@ Options specified by the library. Currently, only `timeToLive` is supported.
 
 Returns an object containing a `read` function.
 
-read(key: string, ...promiseParameters: [])
+#### read(key: string, ...promiseParameters: [])
 
 **PARAMETERS**
 
@@ -62,5 +62,3 @@ All errors will need to be handled after calling the `read` method. The cache wi
 
 ## Omitting `timeToLive` Option
 This will result in an infinite cache. Once a successful response is received, the promise will never be invoked a second time.
-
-
