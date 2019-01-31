@@ -49,7 +49,10 @@ Data returned will be stored in the cache based on a key. Whenever reads occur, 
 
 **promiseParameters**
 
-Parameters that can be spread into the read function which will then be passed into the promise returning function.
+Parameters that will be spread into the `promiseReturningFunction`. An example of calling this function exists below.
+```js
+getAccountsApiCached.read(key, param1, param2);
+```
 
 ### Example
 ```js
