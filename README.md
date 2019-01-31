@@ -37,7 +37,7 @@ Object of options. Supported options are listed in the Types section.
 
 **Return Value**
 
-Returns an object containing a `read` function.
+Returns a `Cache` type.
 
 ### read(key: string, promiseParameters: any[]): Promise
 
