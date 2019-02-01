@@ -16,11 +16,11 @@ export function isTimeToLiveExpired(expiryTime) {
   return false;
 }
 
-export function shouldInvokePromise(cache, key, expiryTime) {
+export function shouldInvokePromise(cache, key, expiryTime, forceInvoke) {
   const containsCacheValue = hasCacheValue(cache, key);
   const isExpiryReached = isTimeToLiveExpired(expiryTime);
 
-  if ((containsCacheValue && isExpiryReached) || !containsCacheValue) {
+  if (forceInvoke || (containsCacheValue && isExpiryReached) || !containsCacheValue) {
     return true;
   }
 
