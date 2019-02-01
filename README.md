@@ -39,7 +39,7 @@ Object of options. Supported options are listed in the Types section.
 
 Returns a `Cache` type.
 
-### Cache.read(key: string, ...promiseParameters: any): Promise
+### Cache.read({ key: string, forceRead: Boolean }, ...promiseParameters: any): Promise
 
 **PARAMETERS**
 
