@@ -5,9 +5,9 @@ const createCache = (promiseFunc, options = {}) => {
 
   const internalOptions = { timeToLive: calculateExpiry(options.timeToLive) };
 
-  async function read(key, ...parameters) {
+  async function read({ key, forceInvoke = false }, ...parameters) {
     let response = cache[key];
-    if (shouldInvokePromise(cache, key, internalOptions.timeToLive)) {
+    if (shouldInvokePromise(cache, key, internalOptions.timeToLive, forceInvoke)) {
       response = await promiseFunc(...parameters);
       cache[key] = response;
       internalOptions.timeToLive = calculateExpiry(options.timeToLive);
