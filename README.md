@@ -55,7 +55,7 @@ Defaulted to false. If this is set to true, the promise will be invoked regardle
 
 Parameters that will be spread into the `promiseReturningFunction`. An example of calling this function exists below.
 ```js
-getAccountsApiCached.read(key, param1, param2);
+getAccountsApiCached.read({ key: 'some-key' }, param1, param2);
 ```
 
 ### Example
