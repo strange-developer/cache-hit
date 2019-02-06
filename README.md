@@ -77,7 +77,7 @@ import getAccountsApiCached from './get-accounts';
 const getAccounts = (username, sessionId) => {
   const key = username; // unique key for this cache instance
   return getAccountsApi
-          .read(key, username, sessionId)
+          .read({ key: key, forceInvoke: false }, username, sessionId)
           .then((response) => dispatch(someAction(response)))
           .catch((error) => dispatch(someErrorAction(error)));
 };
