@@ -1,18 +1,24 @@
 import { shouldInvokePromise, calculateExpiry } from './utils';
 
-const createCache = (promiseFunc, options = {}) => {
-  const cache = {};
+const cache = {};
 
+const createCache = (promiseFunc, options = {}) => {
   const internalOptions = { timeToLive: calculateExpiry(options.timeToLive) };
 
-  async function read({ key, forceInvoke = false }, ...parameters) {
-    let response = cache[key];
-    if (shouldInvokePromise(cache, key, internalOptions.timeToLive, forceInvoke)) {
-      response = await promiseFunc(...parameters);
-      cache[key] = response;
-      internalOptions.timeToLive = calculateExpiry(options.timeToLive);
-    }
-    return response;
+  function read({ key, forceInvoke = false }, ...parameters) {
+    return new Promise((resolve, reject) => {
+      if (shouldInvokePromise(cache, key, internalOptions.timeToLive, forceInvoke)) {
+        promiseFunc(...parameters)
+          .then((promiseResponse) => {
+            cache[key] = promiseResponse;
+            internalOptions.timeToLive = calculateExpiry(options.timeToLive);
+            resolve(cache[key]);
+          })
+          .catch(reject);
+      } else {
+        resolve(cache[key]);
+      }
+    });
   }
 
   return { read };
