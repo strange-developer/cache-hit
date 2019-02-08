@@ -18,9 +18,6 @@
   },
   "author": "strange-developer",
   "license": "MIT",
-  "dependencies": {
-    "@babel/polyfill": "^7.2.5"
-  },
   "devDependencies": {
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.0",
