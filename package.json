@@ -11,7 +11,7 @@
     "url": "https://github.com/strange-developer/cache-hit.git"
   },
   "scripts": {
-    "build": "babel src --out-dir lib --ignore **/*.test.js",
+    "build": "babel src --out-dir lib",
     "test": "jest",
     "test:watch": "jest --watchAll --coverage",
     "lint": "./node_modules/.bin/eslint --ext .js ."
