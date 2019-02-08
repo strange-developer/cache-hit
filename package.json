@@ -1,6 +1,6 @@
 {
   "name": "cache-hit",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "",
   "main": "./lib/index.js",
   "files": [
@@ -11,16 +11,13 @@
     "url": "https://github.com/strange-developer/cache-hit.git"
   },
   "scripts": {
-    "build": "babel src --out-dir lib --ignore **/*.test.js",
+    "build": "babel src --out-dir lib",
     "test": "jest",
     "test:watch": "jest --watchAll --coverage",
     "lint": "./node_modules/.bin/eslint --ext .js ."
   },
   "author": "strange-developer",
   "license": "MIT",
-  "dependencies": {
-    "@babel/polyfill": "^7.2.5"
-  },
   "devDependencies": {
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.0",
