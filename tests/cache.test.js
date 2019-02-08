@@ -34,14 +34,14 @@ describe('With a promise that resolves successfully', () => {
   const promiseFunc = jest
     .fn()
     .mockReturnValue(
-      new Promise(resolve => setTimeout(() => resolve(PAYLOAD), 2500)),
+      new Promise(resolve => setTimeout(() => resolve(PAYLOAD), 100)),
     );
 
   let cachedPromise;
   let promise;
 
   beforeAll(() => {
-    cachedPromise = createCache(promiseFunc, { timeToLive: 499 });
+    cachedPromise = createCache(promiseFunc, { timeToLive: 10000 });
     promise = cachedPromise.read({ key: KEY }, PARAMETER_ONE, PARAMETER_TWO);
   });
 
