@@ -12,9 +12,11 @@
   },
   "scripts": {
     "build": "babel src --out-dir lib",
-    "test": "jest",
-    "test:watch": "jest --watchAll --coverage",
-    "lint": "./node_modules/.bin/eslint --ext .js ."
+    "test": "npm run test:lint && npm run test:vulnerabilities && npm run test:scripts",
+    "test:lint": "./node_modules/.bin/eslint --ext .js .",
+    "test:scripts": "jest --config ./jest.config.json --coverage",
+    "test:vulnerabilities": "npm audit",
+    "test:watch": "jest --watchAll --coverage"
   },
   "author": "strange-developer",
   "license": "MIT",
