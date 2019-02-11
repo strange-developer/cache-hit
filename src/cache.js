@@ -1,4 +1,4 @@
-import { shouldInvokePromise, calculateExpiry } from './utils';
+const { shouldInvokePromise, calculateExpiry } = require('./utils');
 
 const cache = {};
 
@@ -23,4 +23,4 @@ const createCache = (promiseFunc, options = {}) => {
   return { read };
 };
 
-export default createCache;
+module.exports = createCache;
