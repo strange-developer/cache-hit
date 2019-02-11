@@ -1,22 +1,22 @@
-export function calculateExpiry(timeToLive) {
+function calculateExpiry(timeToLive) {
   if (timeToLive === Number.POSITIVE_INFINITY || timeToLive === undefined) {
     return Number.POSITIVE_INFINITY;
   }
   return new Date().getTime() + timeToLive;
 }
 
-export function hasCacheValue(cache, key) {
+function hasCacheValue(cache, key) {
   return cache[key] !== undefined;
 }
 
-export function isTimeToLiveExpired(expiryTime) {
+function isTimeToLiveExpired(expiryTime) {
   if (new Date().getTime() > expiryTime) {
     return true;
   }
   return false;
 }
 
-export function shouldInvokePromise(cache, key, expiryTime, forceInvoke) {
+function shouldInvokePromise(cache, key, expiryTime, forceInvoke) {
   const containsCacheValue = hasCacheValue(cache, key);
   const isExpiryReached = isTimeToLiveExpired(expiryTime);
 
@@ -26,3 +26,10 @@ export function shouldInvokePromise(cache, key, expiryTime, forceInvoke) {
 
   return false;
 }
+
+module.exports = {
+  calculateExpiry,
+  hasCacheValue,
+  isTimeToLiveExpired,
+  shouldInvokePromise,
+};

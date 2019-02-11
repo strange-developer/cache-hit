@@ -1,4 +1,4 @@
-import createCache from '../src/cache';
+const createCache = require('../src/cache');
 
 describe('With a promise that fails', () => {
   const ERROR = new Error('The promise failed');
@@ -12,18 +12,14 @@ describe('With a promise that fails', () => {
   });
 
   test('Returns a rejected promise with the given error', () =>
-    cachedPromise
-      .read({ key: KEY })
-      .catch((error) => {
-        expect(error).toBe(ERROR);
-      }));
+    cachedPromise.read({ key: KEY }).catch((error) => {
+      expect(error).toBe(ERROR);
+    }));
 
   test('Calls the promise again and does not cache it', () =>
-    cachedPromise
-      .read({ key: KEY })
-      .catch(() => {
-        expect(promiseFunc.mock.calls.length).toBe(2);
-      }));
+    cachedPromise.read({ key: KEY }).catch(() => {
+      expect(promiseFunc.mock.calls.length).toBe(2);
+    }));
 });
 
 describe('With a promise that resolves successfully', () => {
@@ -33,9 +29,7 @@ describe('With a promise that resolves successfully', () => {
   const PARAMETER_TWO = 'PARAMETER_TWO';
   const promiseFunc = jest
     .fn()
-    .mockReturnValue(
-      new Promise(resolve => setTimeout(() => resolve(PAYLOAD), 100)),
-    );
+    .mockReturnValue(new Promise(resolve => setTimeout(() => resolve(PAYLOAD), 100)));
 
   let cachedPromise;
   let promise;
@@ -50,26 +44,22 @@ describe('With a promise that resolves successfully', () => {
       expect(promiseFunc.mock.calls[0]).toEqual([PARAMETER_ONE, PARAMETER_TWO]);
     }));
 
-  test('Resolves the promise with it\'s original response', () =>
+  test("Resolves the promise with it's original response", () =>
     promise.then((response) => {
       expect(response).toBe(PAYLOAD);
     }));
 
   test('Returns the cached response when a second call is made', () =>
-    cachedPromise
-      .read({ key: KEY }, PARAMETER_ONE, PARAMETER_TWO)
-      .then(() => {
-        expect(promiseFunc.mock.calls.length).toBe(1);
-      }));
+    cachedPromise.read({ key: KEY }, PARAMETER_ONE, PARAMETER_TWO).then(() => {
+      expect(promiseFunc.mock.calls.length).toBe(1);
+    }));
 });
 
 describe('When the cache expires', () => {
   const KEY = 'KEY_EXPIRE';
   const promiseFunc = jest
     .fn()
-    .mockReturnValue(
-      new Promise(resolve => setTimeout(() => resolve(), 250)),
-    );
+    .mockReturnValue(new Promise(resolve => setTimeout(() => resolve(), 250)));
 
   let cachedPromise;
 
@@ -80,27 +70,21 @@ describe('When the cache expires', () => {
   beforeEach(() => new Promise(resolve => setTimeout(() => resolve(), 1)));
 
   test('Runs the promise the first time', () =>
-    cachedPromise
-      .read({ key: KEY })
-      .then(() => {
-        expect(promiseFunc.mock.calls.length).toBe(1);
-      }));
+    cachedPromise.read({ key: KEY }).then(() => {
+      expect(promiseFunc.mock.calls.length).toBe(1);
+    }));
 
   test('Runs the promise the second time', () =>
-    cachedPromise
-      .read({ key: KEY })
-      .then(() => {
-        expect(promiseFunc.mock.calls.length).toBe(2);
-      }));
+    cachedPromise.read({ key: KEY }).then(() => {
+      expect(promiseFunc.mock.calls.length).toBe(2);
+    }));
 });
 
 describe('With a forced invocation', () => {
   const KEY = 'KEY_FORCE';
   const promiseFunc = jest
     .fn()
-    .mockReturnValue(
-      new Promise(resolve => setTimeout(() => resolve(), 250)),
-    );
+    .mockReturnValue(new Promise(resolve => setTimeout(() => resolve(), 250)));
 
   let cachedPromise;
 
@@ -109,16 +93,12 @@ describe('With a forced invocation', () => {
   });
 
   test('Calls the promise the first time', () =>
-    cachedPromise
-      .read({ key: KEY })
-      .then(() => {
-        expect(promiseFunc.mock.calls.length).toBe(1);
-      }));
+    cachedPromise.read({ key: KEY }).then(() => {
+      expect(promiseFunc.mock.calls.length).toBe(1);
+    }));
 
   test('Calls the promise the second time', () =>
-    cachedPromise
-      .read({ forceInvoke: true, key: KEY })
-      .then(() => {
-        expect(promiseFunc.mock.calls.length).toBe(2);
-      }));
+    cachedPromise.read({ forceInvoke: true, key: KEY }).then(() => {
+      expect(promiseFunc.mock.calls.length).toBe(2);
+    }));
 });
