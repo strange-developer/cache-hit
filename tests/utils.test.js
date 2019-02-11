@@ -1,11 +1,11 @@
-import timekeeper from 'timekeeper';
-
 import {
   calculateExpiry,
   hasCacheValue,
   shouldInvokePromise,
   isTimeToLiveExpired,
 } from '../src/utils';
+
+const timekeeper = require('timekeeper');
 
 describe('shouldInvokePromise', () => {
   let cache;
