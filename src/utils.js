@@ -16,6 +16,12 @@ function isTimeToLiveExpired(expiryTime) {
   return false;
 }
 
+function parseOptions({ timeToLive }) {
+  return {
+    timeToLive: timeToLive ? calculateExpiry(timeToLive) : 0,
+  };
+}
+
 function shouldInvokePromise(cache, key, expiryTime, forceInvoke) {
   const containsCacheValue = hasCacheValue(cache, key);
   const isExpiryReached = isTimeToLiveExpired(expiryTime);
@@ -31,5 +37,6 @@ module.exports = {
   calculateExpiry,
   hasCacheValue,
   isTimeToLiveExpired,
+  parseOptions,
   shouldInvokePromise,
 };
