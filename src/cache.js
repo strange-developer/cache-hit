@@ -20,7 +20,9 @@ const createCache = (promiseFunc, options = {}) => {
       }
     });
 
-  return { read };
+  const debug = () => cache;
+
+  return { debug, read };
 };
 
 module.exports = createCache;
