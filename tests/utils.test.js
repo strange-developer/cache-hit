@@ -1,8 +1,9 @@
 import {
   calculateExpiry,
   hasCacheValue,
-  shouldInvokePromise,
   isTimeToLiveExpired,
+  parseOptions,
+  shouldInvokePromise,
 } from '../src/utils';
 
 const timekeeper = require('timekeeper');
@@ -19,7 +20,7 @@ describe('shouldInvokePromise', () => {
       expiryTime = Number.POSITIVE_INFINITY;
     });
 
-    test('returns true', async () => {
+    test('returns true', () => {
       expect(shouldInvokePromise(cache, key, expiryTime)).toBe(true);
     });
   });
@@ -95,6 +96,24 @@ describe('isTimeToLiveExpired', () => {
 
   test('returns false when expiryTime is greater than current time', () => {
     expect(isTimeToLiveExpired(Number.MAX_SAFE_INTEGER)).toBe(false);
+  });
+});
+
+describe('parseOptions', () => {
+  let timeToLive;
+
+  beforeAll(() => {
+    timekeeper.freeze(new Date(150000000000));
+    timeToLive = 15000;
+  });
+
+  test('Sets \'timeToLive\' to zero if zero is given', () => {
+    expect(parseOptions({ timeToLive: 0 })).toEqual({ timeToLive: 0 });
+  });
+
+  test('Parses the options correctly', () => {
+    expect(parseOptions({ timeToLive }))
+      .toEqual({ timeToLive: 150000015000 });
   });
 });
 

@@ -6,12 +6,17 @@ JavaScript promise caching library
 
 ### options
 
-|Option          |Required|Description                                                     |Default value                |
-|----------------|--------|----------------------------------------------------------------|-----------------------------|
-|timeToLive      |  No    | An integer value that the cache is valid for in milliseconds   |`Number.POSITIVE_INFINITY`   |
+| Option     |Required| Description                                                  | Default value              |
+|------------|--------|--------------------------------------------------------------|----------------------------|
+| timeToLive |  No    | An integer value that the cache is valid for in milliseconds | `Number.POSITIVE_INFINITY` |
 
 #### Omitting `timeToLive` Option
+
 This will result in an infinite cache. Once a successful response is received, the promise will never be invoked a second time.
+
+#### Setting `timeToLive` to `0`
+
+This will result in the result of the promise not being cached. The promise will always be invoked again a second time.
 
 ### Cache
 

@@ -102,3 +102,39 @@ describe('With a forced invocation', () => {
       expect(promiseFunc.mock.calls.length).toBe(2);
     }));
 });
+
+describe('With a \'timeToLive\' of \'0\'', () => {
+  const KEY = 'KEY_TIME_TO_LIVE';
+  const promiseFunc = jest
+    .fn()
+    .mockReturnValue(
+      new Promise(resolve => setTimeout(() => resolve(), 250)),
+    );
+
+  let cachedPromise;
+
+  beforeAll(() => {
+    jest.resetModules();
+    // eslint-disable-next-line global-require
+    const newCreateCache = require('../src/cache');
+    cachedPromise = newCreateCache(promiseFunc, { timeToLive: 0 });
+  });
+
+  beforeEach(() => new Promise(resolve => setTimeout(() => resolve(), 1)));
+
+  test('Runs the promise the first time without caching', () =>
+    cachedPromise
+      .read({ key: KEY })
+      .then(() => {
+        expect(promiseFunc.mock.calls.length).toBe(1);
+        expect(cachedPromise.debug()).toEqual({});
+      }));
+
+  test('Runs the promise the second time without caching', () =>
+    cachedPromise
+      .read({ key: KEY })
+      .then(() => {
+        expect(promiseFunc.mock.calls.length).toBe(2);
+        expect(cachedPromise.debug()).toEqual({});
+      }));
+});
