@@ -114,22 +114,27 @@ describe('With a \'timeToLive\' of \'0\'', () => {
   let cachedPromise;
 
   beforeAll(() => {
-    cachedPromise = createCache(promiseFunc, { timeToLive: 0 });
+    jest.resetModules();
+    // eslint-disable-next-line global-require
+    const newCreateCache = require('../src/cache');
+    cachedPromise = newCreateCache(promiseFunc, { timeToLive: 0 });
   });
 
   beforeEach(() => new Promise(resolve => setTimeout(() => resolve(), 1)));
 
-  test('Runs the promise the first time', () =>
+  test('Runs the promise the first time without caching', () =>
     cachedPromise
       .read({ key: KEY })
       .then(() => {
         expect(promiseFunc.mock.calls.length).toBe(1);
+        expect(cachedPromise.debug()).toEqual({});
       }));
 
-  test('Runs the promise the second time', () =>
+  test('Runs the promise the second time without caching', () =>
     cachedPromise
       .read({ key: KEY })
       .then(() => {
         expect(promiseFunc.mock.calls.length).toBe(2);
+        expect(cachedPromise.debug()).toEqual({});
       }));
 });
