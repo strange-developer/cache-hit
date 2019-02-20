@@ -100,15 +100,20 @@ describe('isTimeToLiveExpired', () => {
 });
 
 describe('parseOptions', () => {
-  const timeToLive = new Date().getTime();
+  let timeToLive;
+
+  beforeAll(() => {
+    timekeeper.freeze(new Date(150000000000));
+    timeToLive = 15000;
+  });
 
   test('Sets \'timeToLive\' to zero if zero is given', () => {
-    expect(parseOptions({})).toEqual({ timeToLive: 0 });
+    expect(parseOptions({ timeToLive: 0 })).toEqual({ timeToLive: 0 });
   });
 
   test('Parses the options correctly', () => {
     expect(parseOptions({ timeToLive }))
-      .toEqual({ timeToLive: calculateExpiry(timeToLive) });
+      .toEqual({ timeToLive: 150000015000 });
   });
 });
 
