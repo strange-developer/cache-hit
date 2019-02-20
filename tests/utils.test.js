@@ -102,7 +102,7 @@ describe('isTimeToLiveExpired', () => {
 describe('parseOptions', () => {
   const timeToLive = new Date().getTime();
 
-  test('Sets \'timeToLive\' to zero if none is given', () => {
+  test('Sets \'timeToLive\' to zero if zero is given', () => {
     expect(parseOptions({})).toEqual({ timeToLive: 0 });
   });
 

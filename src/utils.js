@@ -18,7 +18,7 @@ function isTimeToLiveExpired(expiryTime) {
 
 function parseOptions({ timeToLive }) {
   return {
-    timeToLive: timeToLive ? calculateExpiry(timeToLive) : 0,
+    timeToLive: timeToLive === 0 ? 0 : calculateExpiry(timeToLive),
   };
 }
 
