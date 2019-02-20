@@ -19,7 +19,7 @@ describe('shouldInvokePromise', () => {
       expiryTime = Number.POSITIVE_INFINITY;
     });
 
-    test('returns true', async () => {
+    test('returns true', () => {
       expect(shouldInvokePromise(cache, key, expiryTime)).toBe(true);
     });
   });
