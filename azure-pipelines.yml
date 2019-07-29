@@ -4,18 +4,14 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- master
+  - master
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+  - task: DockerInstaller@0
+    inputs:
+      dockerVersion: '19.03.1'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+  - script: docker build -t cache-hit .
