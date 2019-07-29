@@ -14,4 +14,6 @@ steps:
     inputs:
       dockerVersion: '19.03.1'
 
-  - script: docker build -t cache-hit .
+  - script: docker-compose build .
+
+  - script:
