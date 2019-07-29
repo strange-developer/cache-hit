@@ -10,18 +10,16 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-  - task: DockerInstaller@0
-    inputs:
-      dockerVersion: '19.03.1'
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
 
-  - script: docker-compose build
-    displayName: 'Build Docker image'
-
-  - script: docker-compose run --rm app npm i
+  - script: npm i
     displayName: 'Install dependencies'
 
-  - script: docker-compose run --rm app npm run build
+  - script: npm run build
     displayName: 'Bundle application'
 
-  - script: docker-compose run --rm app npm test
+  - script: npm test
     displayName: 'Run quality checks'
