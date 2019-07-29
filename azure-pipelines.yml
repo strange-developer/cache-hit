@@ -9,13 +9,17 @@ pr:
 pool:
   vmImage: 'ubuntu-latest'
 
-stages:
-  - stage: 'Agent Setup'
-    steps:
-      - task: DockerInstaller@0
-        inputs:
-          dockerVersion: '19.03.1'
+steps:
+  - task: DockerInstaller@0
+    inputs:
+      dockerVersion: '19.03.1'
 
-  - stage: 'Build Application'
-    steps:
-      - script: docker-compose build
+steps:
+  - script: docker-compose build
+    displayName: 'Build Docker image'
+  - script: docker-compose run --rm app npm i
+    displayName: 'Install dependencies'
+  - script: docker-compose run --rm app npm run build
+    displayName: 'Bundle application'
+  - script: docker-compose run --rm app npm test
+    displayName: 'Run quality checks'
