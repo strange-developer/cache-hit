@@ -19,16 +19,25 @@ jobs:
         displayName: 'Install Node.js'
 
   - job: 'Install'
+    parameters:
+      pool:
+        name: 'ubuntu-latest'
     steps:
       - bash: npm install
         displayName: 'Install dependencies'
 
   - job: 'Bundle'
+    parameters:
+      pool:
+        name: 'ubuntu-latest'
     steps:
       - bash: npm run build
         displayName: 'Bundle application'
 
   - job: 'Quality Checks'
+    parameters:
+      pool:
+        name: 'ubuntu-latest'
     steps:
       - bash: npm test
         displayName: 'Run quality checks'
