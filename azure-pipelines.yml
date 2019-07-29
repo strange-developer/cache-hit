@@ -9,12 +9,13 @@ pr:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-  - task: DockerInstaller@0
-    inputs:
-      dockerVersion: '19.03.1'
 stages:
-  - stage: 'Build'
+  - stage: 'Agent Setup'
+    steps:
+      - task: DockerInstaller@0
+        inputs:
+          dockerVersion: '19.03.1'
+
+  - stage: 'Build Application'
     steps:
       - script: docker-compose build
-        displayName: 'Building image'
