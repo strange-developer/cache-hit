@@ -7,48 +7,20 @@ pr:
   - feature/*
   - fix/*
 
-jobs:
-  - job: 'Prepare environment'
-    steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: '10.x'
-        displayName: 'Install Node.js'
+pool:
+  vmImage: 'ubuntu-latest'
 
-  - job: 'Install'
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-      - bash: npm install
-        displayName: 'Install dependencies'
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+    displayName: 'Install Node.js'
 
-  - job: 'Bundle'
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-      - bash: npm run build
-        displayName: 'Bundle application'
+  - script: npm install
+    displayName: 'Install dependencies'
 
-  - job: 'Quality Checks'
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-      - bash: npm test
-        displayName: 'Run quality checks'
+  - script: npm run build
+    displayName: 'Bundle application'
 
-stages:
-  - stage: 'Prepare'
-    jobs:
-      - job: 'Prepare environment'
-
-  - stage: 'Install'
-    jobs:
-      - job: 'Install'
-
-  - stage: 'Bundle'
-    jobs:
-      - job: 'Bundle'
-
-  - stage: 'Run quality qhecks'
-    jobs:
-      - job: 'Quality Checks'
+  - script: npm test
+    displayName: 'Run quality checks'
