@@ -8,7 +8,8 @@ pr:
   - fix/*
 
 jobs:
-  - job: 'Setup OS'
+  - job: setup
+    displayName: 'Install Node'
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -17,19 +18,21 @@ jobs:
           versionSpec: '10.x'
         displayName: 'Install Node.js'
 
-  - job: 'Install dependencies'
+  - job: install_dependencies
     pool:
       vmImage: 'ubuntu-latest'
     steps:
       - bash: npm install
 
-  - job: 'Bundle application'
+  - job: bundle
+    displayName: 'Bundle application files'
     pool:
       vmImage: 'ubuntu-latest'
     steps:
       - bash: npm run build
 
-  - job: 'Run quality checks'
+  - job: quality_checks
+    displayName: 'Run quality checks'
     pool:
       vmImage: 'ubuntu-latest'
     steps:
