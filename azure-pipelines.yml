@@ -12,6 +12,8 @@ pool:
 
 jobs:
   - job: Setup OS
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
       - task: NodeTool@0
         inputs:
@@ -19,14 +21,20 @@ jobs:
         displayName: 'Install Node.js'
 
   - job: 'Install dependencies'
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
       - bash: npm install
 
   - job: 'Bundle application'
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
       - bash: npm run build
 
   - job: 'Run quality checks'
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
       - bash: npm test
 # steps:
