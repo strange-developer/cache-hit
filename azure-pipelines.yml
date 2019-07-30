@@ -7,9 +7,6 @@ pr:
   - feature/*
   - fix/*
 
-pool:
-  vmImage: 'ubuntu-latest'
-
 jobs:
   - job: Setup OS
     pool:
