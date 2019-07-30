@@ -17,6 +17,7 @@ jobs:
         inputs:
           versionSpec: '10.x'
         displayName: 'Install Node.js'
+      - bash: npm install -g babel
 
   - job: install_dependencies
     dependsOn: setup
@@ -35,7 +36,7 @@ jobs:
 
   - job: lint
     displayName: 'Lint'
-    dependsOn: bundle
+    dependsOn: install_dependencies
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -43,7 +44,7 @@ jobs:
 
   - job: test
     displayName: 'Test Scripts'
-    dependsOn: bundle
+    dependsOn: install_dependencies
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -51,7 +52,7 @@ jobs:
 
   - job: vulnerabilities
     displayName: 'Test vulnerabilities'
-    dependsOn: bundle
+    dependsOn: install_dependencies
     pool:
       vmImage: 'ubuntu-latest'
     steps:
