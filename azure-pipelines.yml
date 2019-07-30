@@ -10,17 +10,36 @@ pr:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '10.x'
-    displayName: 'Install Node.js'
+jobs:
+  - job: Setup OS
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '10.x'
+        displayName: 'Install Node.js'
 
-  - script: npm install
-    displayName: 'Install dependencies'
+  - job: 'Install dependencies'
+    steps:
+      - bash: npm install
 
-  - script: npm run build
-    displayName: 'Bundle application'
+  - job: 'Bundle application'
+    steps:
+      - bash: npm run build
 
-  - script: npm test
-    displayName: 'Run quality checks'
+  - job: 'Run quality checks'
+    steps:
+      - bash: npm test
+# steps:
+#   - task: NodeTool@0
+#     inputs:
+#       versionSpec: '10.x'
+#     displayName: 'Install Node.js'
+
+#   - script: npm install
+#     displayName: 'Install dependencies'
+
+#   - script: npm run build
+#     displayName: 'Bundle application'
+
+#   - script: npm test
+#     displayName: 'Run quality checks'
