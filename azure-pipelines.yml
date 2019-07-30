@@ -17,13 +17,15 @@ jobs:
         inputs:
           versionSpec: '10.x'
         displayName: 'Install Node.js'
+      - bash: docker-compose build
 
   - job: install_dependencies
+    displayName: 'Install Dependencies'
     dependsOn: setup
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-      - bash: npm install
+      - bash: docker-compose run --rm app npm install
 
   - job: bundle
     dependsOn:
@@ -33,7 +35,7 @@ jobs:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-      - bash: npm run build
+      - bash: docker-compose run --rm app npm run build
 
   - job: lint
     displayName: 'Lint'
@@ -43,7 +45,7 @@ jobs:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-      - bash: npm run test:lint
+      - bash: docker-compose run --rm app npm run test:lint
 
   - job: test
     displayName: 'Test Scripts'
@@ -53,7 +55,7 @@ jobs:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-      - bash: npm run test:lint
+      - bash: docker-compose run --rm app npm run test:lint
 
   - job: vulnerabilities
     displayName: 'Test vulnerabilities'
@@ -63,7 +65,7 @@ jobs:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-      - bash: npm run test:lint
+      - bash: docker-compose run --rm app npm run test:lint
 # steps:
 #   - task: NodeTool@0
 #     inputs:
