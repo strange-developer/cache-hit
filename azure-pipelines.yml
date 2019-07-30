@@ -35,7 +35,7 @@ jobs:
 
   - job: lint
     displayName: 'Lint'
-    dependsOn: install_dependencies
+    dependsOn: bundle
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -43,7 +43,7 @@ jobs:
 
   - job: test
     displayName: 'Test Scripts'
-    dependsOn: install_dependencies
+    dependsOn: bundle
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -51,7 +51,7 @@ jobs:
 
   - job: vulnerabilities
     displayName: 'Test vulnerabilities'
-    dependsOn: install_dependencies
+    dependsOn: bundle
     pool:
       vmImage: 'ubuntu-latest'
     steps:
