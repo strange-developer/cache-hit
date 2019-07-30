@@ -8,7 +8,7 @@ pr:
   - fix/*
 
 jobs:
-  - job: Setup OS
+  - job: 'Setup OS'
     pool:
       vmImage: 'ubuntu-latest'
     steps:
