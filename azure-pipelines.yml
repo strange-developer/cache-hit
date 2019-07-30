@@ -10,16 +10,16 @@ pr:
 jobs:
   - job: setup
     displayName: 'Build image'
-    pool:
-      vmImage: 'ubuntu-latest'
+    # pool:
+    #   vmImage: 'ubuntu-latest'
     steps:
       - bash: docker-compose build
 
   - job: install_dependencies
     displayName: 'Install Dependencies'
     dependsOn: setup
-    pool:
-      vmImage: 'ubuntu-latest'
+    # pool:
+    #   vmImage: 'ubuntu-latest'
     steps:
       - bash: docker-compose run --rm app npm install
 
@@ -28,8 +28,8 @@ jobs:
       - setup
       - install_dependencies
     displayName: 'Bundle application files'
-    pool:
-      vmImage: 'ubuntu-latest'
+    # pool:
+    #   vmImage: 'ubuntu-latest'
     steps:
       - bash: docker-compose run --rm app npm run build
 
@@ -38,8 +38,8 @@ jobs:
     dependsOn:
       - setup
       - install_dependencies
-    pool:
-      vmImage: 'ubuntu-latest'
+    # pool:
+    #   vmImage: 'ubuntu-latest'
     steps:
       - bash: docker-compose run --rm app npm run test:lint
 
@@ -48,8 +48,8 @@ jobs:
     dependsOn:
       - setup
       - install_dependencies
-    pool:
-      vmImage: 'ubuntu-latest'
+    # pool:
+    #   vmImage: 'ubuntu-latest'
     steps:
       - bash: docker-compose run --rm app npm run test:lint
 
@@ -58,8 +58,8 @@ jobs:
     dependsOn:
       - setup
       - install_dependencies
-    pool:
-      vmImage: 'ubuntu-latest'
+    # pool:
+    #   vmImage: 'ubuntu-latest'
     steps:
       - bash: docker-compose run --rm app npm run test:lint
 # steps:
