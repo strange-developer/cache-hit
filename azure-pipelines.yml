@@ -19,24 +19,43 @@ jobs:
         displayName: 'Install Node.js'
 
   - job: install_dependencies
+    dependsOn: setup
     pool:
       vmImage: 'ubuntu-latest'
     steps:
       - bash: npm install
 
   - job: bundle
+    dependsOn: install_dependencies
     displayName: 'Bundle application files'
     pool:
       vmImage: 'ubuntu-latest'
     steps:
       - bash: npm run build
 
-  - job: quality_checks
-    displayName: 'Run quality checks'
+  - job: lint
+    displayName: 'Lint'
+    dependsOn: install_dependencies
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-      - bash: npm test
+      - bash: npm run test:lint
+
+  - job: test
+    displayName: 'Test Scripts'
+    dependsOn: install_dependencies
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - bash: npm run test:lint
+
+  - job: vulnerabilities
+    displayName: 'Test vulnerabilities'
+    dependsOn: install_dependencies
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - bash: npm run test:lint
 # steps:
 #   - task: NodeTool@0
 #     inputs:
