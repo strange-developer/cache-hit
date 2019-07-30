@@ -9,14 +9,10 @@ pr:
 
 jobs:
   - job: setup
-    displayName: 'Install Node'
+    displayName: 'Build image'
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: '10.x'
-        displayName: 'Install Node.js'
       - bash: docker-compose build
 
   - job: install_dependencies
