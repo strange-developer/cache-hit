@@ -1,0 +1,79 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+pr:
+  - feature/*
+  - fix/*
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - script: docker-compose build
+    displayName: 'Install dependencies'
+
+  - script: docker-compose run --rm app npm install
+    displayName: 'Install dependencies'
+
+  - script: docker-compose run --rm app npm run build
+    displayName: 'Bundle application'
+
+  - script: docker-compose run --rm app npm test
+    displayName: 'Run quality checks'
+# jobs:
+#   - job: setup
+#     displayName: 'Build image'
+#     # pool:
+#     #   vmImage: 'ubuntu-latest'
+#     steps:
+#       - bash: docker-compose build
+
+#   - job: install_dependencies
+#     displayName: 'Install Dependencies'
+#     dependsOn: setup
+#     # pool:
+#     #   vmImage: 'ubuntu-latest'
+#     steps:
+#       - bash: docker-compose run --rm app npm install
+
+#   - job: bundle
+#     dependsOn:
+#       - setup
+#       - install_dependencies
+#     displayName: 'Bundle application files'
+#     # pool:
+#     #   vmImage: 'ubuntu-latest'
+#     steps:
+#       - bash: docker-compose run --rm app npm run build
+
+#   - job: lint
+#     displayName: 'Lint'
+#     dependsOn:
+#       - setup
+#       - install_dependencies
+#     # pool:
+#     #   vmImage: 'ubuntu-latest'
+#     steps:
+#       - bash: docker-compose run --rm app npm run test:lint
+
+#   - job: test
+#     displayName: 'Test Scripts'
+#     dependsOn:
+#       - setup
+#       - install_dependencies
+#     # pool:
+#     #   vmImage: 'ubuntu-latest'
+#     steps:
+#       - bash: docker-compose run --rm app npm run test:lint
+
+#   - job: vulnerabilities
+#     displayName: 'Test vulnerabilities'
+#     dependsOn:
+#       - setup
+#       - install_dependencies
+#     # pool:
+#     #   vmImage: 'ubuntu-latest'
+#     steps:
+#       - bash: docker-compose run --rm app npm run test:lint
