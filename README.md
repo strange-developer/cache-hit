@@ -44,7 +44,7 @@ Object of options. Supported options are listed in the Types section.
 
 Returns a `Cache` type.
 
-### Cache.read({ key: string, forceRead: Boolean }, ...promiseParameters: any): Promise
+### Cache.read({ key: string, forceInvoke: Boolean }, ...promiseParameters: any): Promise
 
 **PARAMETERS**
 
@@ -52,7 +52,7 @@ Returns a `Cache` type.
 
 Data returned will be stored in the cache based on a key. Whenever reads occur, the cache will first be checked for a _valid_ cache value and return the cached value or in the case of an _invalid_ cache, the promise will be invoked and data will be stored in the cache depending on your `timeToLive` option.
 
-**forceRead**
+**forceInvoke**
 
 Defaulted to false. If this is set to true, the promise will be invoked regardless of the caching policy.
 
